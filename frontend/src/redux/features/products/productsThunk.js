@@ -3,9 +3,9 @@ import axios from "axios";
 
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
-    async (_,thunkAPI)=>{
+    async (keyword,thunkAPI)=>{
         try{
-            const response = await axios.get('http://localhost:5000/api/products');
+            const response = await axios.get(`http://localhost:5000/api/products?keyword=${keyword}`);
             return response.data;
         }catch(error){
             return thunkAPI.rejectWithValue(error.message);

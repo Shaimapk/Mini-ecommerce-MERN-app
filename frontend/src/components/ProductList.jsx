@@ -12,15 +12,17 @@ export default function ProductList() {
     },[]);
 
   return (
-    <div className="m-4 grid lg:grid-col-4 md:grid-cols-3 grid-col-1">
+    <div>
         <h1>Products</h1>
-        {products.map((product)=>(
-            <div key={product.id}>
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                
-            </div>
-        ))}
+        <div className="m-4 grid lg:grid-col-4 md:grid-cols-3 grid-col-1">
+            {products.map((product)=>(
+                <div key={product.id} className="border rounded-lg m-4 p-4 shadow-md">
+                    <h3>{product.name}</h3>
+                    <p>{product.description}</p>
+                    
+                </div>
+            ))}
+        </div>
     </div>
   )
 }
