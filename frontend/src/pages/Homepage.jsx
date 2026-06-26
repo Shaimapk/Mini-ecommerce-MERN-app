@@ -7,31 +7,37 @@ export default function Homepage() {
 
 
   const [search,setSearch]=useState('');
+  const [category,setCategory]=useState('');
   const dispatch = useDispatch();
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
-      dispatch(fetchProducts(search));
+      dispatch(fetchProducts({keyword:search,category}));
     },500);
     return()=> clearTimeout(timer);
-  },[search,dispatch]);
+  },[search,category,dispatch]);
 
   return (
     <div className="p-4">
 
       <div className="flex gap-4 items-center justify-between">
-        <input type="text" placeholder="search here..." onChange={(e)=>setSearch(e.target.value)} className="border corder-gray-300 rounded-md px-4 py-2"/>
-        <select name="category">
+
+        <input type="text" placeholder="search here..." onChange={(e)=>setSearch(e.target.value)} className="border border-gray-300 rounded-md px-4 py-2"/>
+        
+        <select name="category" value={category} onChange={(e)=>setCategory(e.target.value)}>
           <option value="">Category</option>
-          <option value="electronics">Fashion</option>
-          <option value="fashion">Electronics</option>
-          <option value="books">Books</option>
+          <option value="fashion">Fashion</option>
+          <option value="mobiles">Mobiles</option>
+          <option value="beauty">Beauty</option>
+          <option value="home">Home</option>
+          <option value="electronics">Electronics</option>
         </select>
-          <select name="sort">
-            <option value="">Sort by:</option>
-            <option value="priceLowToHigh">Price: Low to High</option>
-            <option value="priceHighToLow">Price: High to Low</option>
-          </select>
+        
+        <select name="sort">
+          <option value="">Sort by:</option>
+          <option value="priceLowToHigh">Price: Low to High</option>
+          <option value="priceHighToLow">Price: High to Low</option>
+        </select>
       </div>
       
       <ProductList />

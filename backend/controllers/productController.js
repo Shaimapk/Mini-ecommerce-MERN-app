@@ -18,14 +18,21 @@ export const createProduct = async (req,res)=>{
 
 export const getProducts = async (req,res)=>{
     try {
-        const keyword = req.query.keyword || '';
-        
-        const products = await Product.find({
-            name:{
+        const {keyword='',category=''}=req.query;
+        console.log(`keyword=${keyword} and category=${category}`);
+
+        const query={}
+
+        if(keyword){
+            query.name={
                 $regex:keyword,
                 $options:"i"
             }
-        });
+        }
+        if(category){
+            query.category = category
+        }
+        const products = await Product.find(query);
         res.status(200).json(products);
         
     } catch (error) {
