@@ -22,9 +22,9 @@ export default function Homepage() {
 
       <div className="flex gap-4 items-center justify-between">
 
-        <input type="text" placeholder="search here..." onChange={(e)=>setSearch(e.target.value)} className="border border-gray-300 rounded-md px-4 py-2"/>
+        <input type="text" placeholder="search here..." onChange={(e)=>setSearch(e.target.value)} className="border border-gray-300 rounded-md px-4 py-2 w-1/2"/>
         
-        <select name="category" value={category} onChange={(e)=>setCategory(e.target.value)}>
+        <select name="category" value={category} onChange={(e)=>setCategory(e.target.value)} className="border border-gray-300 px-4 py-2 rounded-lg w-50">
           <option value="">Category</option>
           <option value="fashion">Fashion</option>
           <option value="mobiles">Mobiles</option>
@@ -33,7 +33,7 @@ export default function Homepage() {
           <option value="electronics">Electronics</option>
         </select>
         
-        <select name="sort">
+        <select name="sort" className="border border-gray-300 px-4 py-2 rounded-lg w-50">
           <option value="">Sort by:</option>
           <option value="priceLowToHigh">Price: Low to High</option>
           <option value="priceHighToLow">Price: High to Low</option>
