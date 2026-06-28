@@ -3,10 +3,10 @@ import axios from "axios";
 
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
-    async ({keyword='',category=''},thunkAPI)=>{
+    async ({keyword='',category='',sort=''},thunkAPI)=>{
         try{
             
-            const response = await axios.get(`http://localhost:5000/api/products?keyword=${keyword}&category=${category}`);
+            const response = await axios.get(`http://localhost:5000/api/products?keyword=${keyword}&category=${category}&sort=${sort}`);
             return response.data;
         }catch(error){
             return thunkAPI.rejectWithValue(error.message);

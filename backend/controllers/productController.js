@@ -18,8 +18,7 @@ export const createProduct = async (req,res)=>{
 
 export const getProducts = async (req,res)=>{
     try {
-        const {keyword='',category=''}=req.query;
-        console.log(`keyword=${keyword} and category=${category}`);
+        const {keyword='',category='',sort=''}=req.query;
 
         const query={}
 
@@ -32,8 +31,20 @@ export const getProducts = async (req,res)=>{
         if(category){
             query.category = category
         }
-        const products = await Product.find(query);
+
+        let sortOption={};
+
+        if(sort==='priceLowToHigh'){
+            sortOption.price=1; //ascending order
+        }
+        else if(sort==='priceHighToLow') {
+            sortOption.price=-1; //descending order
+        }
+
+        const products = await Product.find(query).sort(sortOption);
         res.status(200).json(products);
+
+      
         
     } catch (error) {
         res.status(500).json({

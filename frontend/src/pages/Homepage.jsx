@@ -8,14 +8,15 @@ export default function Homepage() {
 
   const [search,setSearch]=useState('');
   const [category,setCategory]=useState('');
+  const [sort,setSort]=useState('');
   const dispatch = useDispatch();
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
-      dispatch(fetchProducts({keyword:search,category}));
+      dispatch(fetchProducts({keyword:search,category,sort}));
     },500);
     return()=> clearTimeout(timer);
-  },[search,category,dispatch]);
+  },[search,category,sort,dispatch]);
 
   return (
     <div className="p-4">
@@ -33,7 +34,7 @@ export default function Homepage() {
           <option value="electronics">Electronics</option>
         </select>
         
-        <select name="sort" className="border border-gray-300 px-4 py-2 rounded-lg w-50">
+        <select name="sort" value={sort} onChange={(e)=>setSort(e.target.value)} className="border border-gray-300 px-4 py-2 rounded-lg w-50">
           <option value="">Sort by:</option>
           <option value="priceLowToHigh">Price: Low to High</option>
           <option value="priceHighToLow">Price: High to Low</option>
