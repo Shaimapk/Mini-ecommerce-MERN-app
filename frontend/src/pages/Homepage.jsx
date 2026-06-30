@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductList from "../components/ProductList";
 import { fetchProducts } from "../redux/features/products/productsThunk";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Homepage() {
 
@@ -9,14 +9,34 @@ export default function Homepage() {
   const [search,setSearch]=useState('');
   const [category,setCategory]=useState('');
   const [sort,setSort]=useState('');
+
   const dispatch = useDispatch();
+  const totalPages = useSelector((state)=>state.products.totalPages);
+
+  const [page,setPage]=useState(1);
+    
+    const pageButtons = [];
+    for(let i=1; i<=totalPages;i++){
+        pageButtons.push(
+            <button 
+              onClick={()=>{
+                setPage(i);
+                window.scroll({
+                  top:0,
+                  behavior:"smooth"
+                })
+              }} 
+              className={`${page===i? "text-purple-500": "text-blue-500 cursor-pointer border rounded-full px-2 py-0.5"}`}
+            >{i}</button>
+        )
+    }
 
   useEffect(()=>{
     const timer = setTimeout(()=>{
-      dispatch(fetchProducts({keyword:search,category,sort}));
+      dispatch(fetchProducts({keyword:search,category,sort,page}));
     },500);
     return()=> clearTimeout(timer);
-  },[search,category,sort,dispatch]);
+  },[search,category,sort,page,dispatch]);
 
   return (
     <div className="p-4">
@@ -42,6 +62,7 @@ export default function Homepage() {
       </div>
       
       <ProductList />
+      <p className="flex justify-center gap-20">{pageButtons}</p>
     </div>
   )
 }

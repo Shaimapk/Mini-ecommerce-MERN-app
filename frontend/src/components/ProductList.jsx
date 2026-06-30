@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { fetchProducts } from "../redux/features/products/productsThunk";
 
 export default function ProductList() {
 
-    const {products} = useSelector((state)=>state.products);
+    const { products } = useSelector((state)=>state.products);
     const dispatch = useDispatch();
     const API_URL= 'http://localhost:5000';
+    
+    
 
     useEffect(()=>{
         dispatch(fetchProducts());

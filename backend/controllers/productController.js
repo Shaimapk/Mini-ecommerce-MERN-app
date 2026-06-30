@@ -18,7 +18,7 @@ export const createProduct = async (req,res)=>{
 
 export const getProducts = async (req,res)=>{
     try {
-        const {keyword='',category='',sort=''}=req.query;
+        const {keyword='',category='',sort='',page=''}=req.query;
 
         const query={}
 
@@ -41,10 +41,16 @@ export const getProducts = async (req,res)=>{
             sortOption.price=-1; //descending order
         }
 
-        const products = await Product.find(query).sort(sortOption);
-        res.status(200).json(products);
+        const limit = 6; //products per page
+        const skip = (page-1)*limit;
 
-      
+        const totalProducts = await Product.countDocuments(query);
+        const totalPages= Math.ceil(totalProducts/limit);
+
+        const products = await Product.find(query).sort(sortOption).skip(skip).limit(limit);
+        res.status(200).json({ products, totalPages });
+
+        
         
     } catch (error) {
         res.status(500).json({
