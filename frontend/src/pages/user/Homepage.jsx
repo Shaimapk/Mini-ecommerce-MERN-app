@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import ProductList from "../components/ProductList";
-import { fetchProducts } from "../redux/features/products/productsThunk";
+import ProductList from "../../components/ProductList";
+import { fetchProducts } from "../../redux/features/products/productsThunk";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Homepage() {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux"
-import { addProduct } from "../redux/features/products/productsThunk";
+import { addProduct } from "../../redux/features/products/productsThunk";
 import { useNavigate } from "react-router-dom"
 
 export default function AddProduct() {
@@ -27,7 +27,7 @@ export default function AddProduct() {
     if(productData.price==='' || productData.price < 0) newErrors.price="Enter a valid price"
     if(productData.category==='') newErrors.category="Select a category"
     if(productData.stock==='' || productData.stock<0) newErrors.stock="Please enter a valid no. of stocks"
-    if(productData.image==='') newErrors.image="Please upload product image"
+    if(productData.image===null) newErrors.image="Please upload product image"
     setErrors(newErrors);
     return(Object.keys(newErrors).length===0)
   }
