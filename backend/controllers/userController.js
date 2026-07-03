@@ -27,6 +27,15 @@ export const userRegistration = async (req,res)=>{
         //generate jwt
         const token = generateToken(user);
 
+        res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: false,
+        path:'/',
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        });
+
+
         res.status(201).json({message:'User registered successfully',
             token,
             user:{
@@ -41,6 +50,7 @@ export const userRegistration = async (req,res)=>{
         res.status(500).json({message:error.message});
     }
 }
+
 
 export const login = async (req,res) => {
     try {
@@ -60,6 +70,15 @@ export const login = async (req,res) => {
         //generate jwt
         const token = generateToken(user);
 
+        res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: false,
+        path:'/',
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        });
+
+
         res.status(200).json({
             message:'Login successful',
             token,
@@ -75,3 +94,20 @@ export const login = async (req,res) => {
         return res.status(500).json({message:error.message});
     }
 }
+
+export const getProfile = async (req,res)=>{
+    res.status(200).json(req.user);
+}
+
+export const logout = (req, res) => {
+    res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: false,
+    path: "/",
+});
+
+    res.status(200).json({
+        message: "Logged out successfully",
+    });
+};

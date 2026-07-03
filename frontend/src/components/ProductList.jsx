@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { fetchProducts } from "../redux/features/products/productsThunk";
+import { addToCart } from "../redux/features/cart/cartSlice";
 
 export default function ProductList() {
 
     const { products } = useSelector((state)=>state.products);
     const dispatch = useDispatch();
     const API_URL= 'http://localhost:5000';
+
+    const { user }= useSelector((state)=>state.user);
     
     
 
@@ -26,7 +29,16 @@ export default function ProductList() {
                     <p>{product.description}</p>
                     <p className="font-medium text-lg">₹{product.price}</p>
 
-                </div>
+                    {user?.role==='admin' &&
+                        <div className="flex gap-4">
+                            <button  className="text-white bg-blue-500 hover:cursor-pointer p-2 border-0 rounded-lg mt-2">Edit</button>
+                            <button  className="text-white bg-blue-500 hover:cursor-pointer p-2 border-0 rounded-lg mt-2">Delete</button>
+                        </div>
+                    }
+                    {user?.role==='user' &&
+                    <button onClick={()=>dispatch(addToCart(product))} className="text-white bg-blue-500 hover:cursor-pointer p-2 border-0 rounded-lg mt-2">Add to cart</button>
+                    }
+                    </div>
             ))}
         </div>
     </div>

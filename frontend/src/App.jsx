@@ -6,8 +6,18 @@ import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Cart from "./pages/user/Cart";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getCurrentUser } from "./redux/features/user/userThunk";
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getCurrentUser());
+  },[dispatch]);
+
   return (
     <BrowserRouter>
       <Navbar />

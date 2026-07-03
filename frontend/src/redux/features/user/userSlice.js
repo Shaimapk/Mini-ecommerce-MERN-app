@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userRegister,userLogin } from "./userThunk.js";
+import { userRegister,userLogin,getCurrentUser,userLogout } from "./userThunk.js";
 
 const userSlice = createSlice({
     name: "user",
@@ -39,6 +39,35 @@ const userSlice = createSlice({
             .addCase(userLogin.rejected,(state,action)=>{
                 state.loading=false;
                 state.error=action.payload;
+            })
+            .addCase(getCurrentUser.pending,(state)=>{
+                state.loading=true;
+                state.error=null;
+
+            })
+            .addCase(getCurrentUser.fulfilled,(state,action)=>{
+                state.user=action.payload;
+                state.loading=false;
+                state.error=null;
+            })
+            .addCase(getCurrentUser.rejected,(state,action)=>{
+                state.user=null;
+                state.loading=false;
+                state.error=action.payload;
+            })
+            .addCase(userLogout.pending,(state)=>{
+                state.loading=true;
+                state.error=null;
+            })
+            .addCase(userLogout.fulfilled,(state,action)=>{
+                state.user=null;
+                state.loading=false;
+                state.error=null;
+                state.message=action.payload.message;
+            })
+            .addCase(userLogout.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
             })
     }
 })

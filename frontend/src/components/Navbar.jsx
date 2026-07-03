@@ -1,9 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { userLogout } from "../redux/features/user/userThunk";
+
 
 export default function Navbar() {
 
   const {user} = useSelector((state)=>state.user);
+  const dispatch = useDispatch();
+
   const role = user?.role
   return (
     <nav className="bg-orange-700 p-4 text-white flex justify-between">
@@ -16,7 +20,11 @@ export default function Navbar() {
         </div>
         <div>
           {user?
-          <p>Hello, {user.username}</p> :
+            <div>
+              <p>Hello, {user.username}</p>
+              <button onClick={()=>dispatch(userLogout())} className="hover:cursor-pointer">Logout</button>
+            </div>
+           :
           <Link to='/login'>Login</Link>
           }
         </div>
