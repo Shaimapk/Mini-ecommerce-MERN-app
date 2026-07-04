@@ -40,3 +40,47 @@ export const addProduct= createAsyncThunk(
     }
 )
 
+export const deleteProduct = createAsyncThunk(
+    "products/deleteProduct",
+    async(id,thunkAPI)=>{
+        try {
+            await axios.delete(`http://localhost:5000/api/products/${id}`);
+            return id;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
+
+export const updateProduct = createAsyncThunk(
+    "products/updateProduct",
+    async({id,productData},thunkAPI) => {
+
+        const formData = new FormData();
+
+        formData.append("name",productData.name);
+        formData.append("description",productData.description);
+        formData.append("price",productData.price);
+        formData.append("category",productData.category);
+        formData.append("stock",productData.stock);
+       
+        if (productData.image instanceof File) {
+             formData.append("image", productData.image);
+        }
+
+        try {
+            const response = await axios.put(`http://localhost:5000/api/products/${id}`,
+                formData,
+             {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            return response.data;
+
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+    }
+)
+

@@ -59,3 +59,56 @@ export const getProducts = async (req,res)=>{
         
     }
 }
+
+export const deleteProduct = async (req,res) =>{
+    const id = req.params.id;
+    try {
+        await Product.findByIdAndDelete(id);
+        res.status(200).json({message: 'product deleted succeesfully'});
+        
+    } catch (error) {
+        res.status(500).json({
+            message:error.message
+        })
+    }
+}
+
+export const updateProduct = async (req, res) => {
+    const id = req.params.id;
+
+    const updateData = {
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        category: req.body.category,
+        stock: req.body.stock,
+    };
+
+    if (req.file) {
+        updateData.image = req.file.filename;
+    }
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+            id,
+            updateData,
+            {
+                returnDocument: "after",
+                runValidators: true,
+            }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({
+                message: "Product not found",
+            });
+        }
+
+        res.status(200).json(updatedProduct);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+    }
+};

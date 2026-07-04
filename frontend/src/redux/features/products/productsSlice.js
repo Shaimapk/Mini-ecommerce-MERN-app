@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {fetchProducts,addProduct} from "./productsThunk";
+import {fetchProducts,addProduct, deleteProduct, updateProduct} from "./productsThunk";
 
 const productSlice = createSlice({
     name:"products",
@@ -38,6 +38,35 @@ const productSlice = createSlice({
                 state.loading=false;
                 state.error=action.payload;
             })
+            .addCase(deleteProduct.pending,(state)=>{
+                state.loading=true;
+                state.error=null;
+            })
+            .addCase(deleteProduct.fulfilled,(state,action)=>{
+                state.products=state.products.filter((product)=>product._id !== action.payload);
+                state.loading=false;
+            })
+            .addCase(deleteProduct.rejected,(state,action)=>{
+                state.loading=false;
+                state.error=action.payload;
+            })
+            .addCase(updateProduct.pending,(state)=>{
+                state.loading=true;
+                state.error=null;
+            })
+            .addCase(updateProduct.fulfilled,(state,action)=>{
+                state.loading=false;
+                state.error=null;
+
+                const index = state.products.findIndex((product)=> product._id === action.payload._id);
+
+                state.products[index]=action.payload;
+            })
+            .addCase(updateProduct.rejected,(state,action)=>{
+                state.loading=false;
+                state.error=action.payload;
+            } )
+            
     }
     
 
