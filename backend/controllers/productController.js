@@ -3,7 +3,7 @@ import Product from '../models/productModel.js'
 export const createProduct = async (req,res)=>{
     try {
         const {name,description,price,category,stock}=req.body;
-        const image = req.file.filename;
+        const image = req.file.path;
         const product = await Product.create({
             name,description,price,category,stock,image
         });

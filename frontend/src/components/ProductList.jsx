@@ -8,7 +8,6 @@ export default function ProductList() {
 
     const { products } = useSelector((state)=>state.products);
     const dispatch = useDispatch();
-    const API_URL= 'http://localhost:5000';
     const navigate = useNavigate();
 
     const { user }= useSelector((state)=>state.user);
@@ -31,7 +30,7 @@ export default function ProductList() {
             {products.map((product)=>(
                 <div key={product._id} className="border-0 rounded-lg m-4 p-4 shadow-xl">
                     
-                    <img src={`${API_URL}/uploads/${product.image}`} alt={product.name} className="w-48 h-48 object-cover rounded-2xl" />
+                    <img src={product.image} alt={product.name} className="w-48 h-48 object-cover rounded-2xl" />
                     <h3 className="font-bold text-xl ">{product.name}</h3>
                     <p>{product.description}</p>
                     <p className="font-medium text-lg">₹{product.price}</p>
