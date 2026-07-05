@@ -22,6 +22,7 @@ backend/dist/
 .env
 frontend/.env
 backend/.env
+backend/config/config.env
 
 # Local files
 *.local
@@ -40,4 +41,4 @@ backend/.env
 
 # Uploads
 backend/uploads/*
-!backend/uploads/.gitkeep
+!backend/uploads/.gitkeep   
