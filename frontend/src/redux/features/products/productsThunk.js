@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from '../../../api/axios'
+
 
 export const fetchProducts = createAsyncThunk(
     "products/fetchProducts",
     async ({keyword='',category='',sort='',page=1},thunkAPI)=>{
         try{
             
-            const response = await axios.get(`http://localhost:5000/api/products?keyword=${keyword}&category=${category}&sort=${sort}&page=${page}`);
+            const response = await api.get(`/products?keyword=${keyword}&category=${category}&sort=${sort}&page=${page}`);
             return response.data;
         }catch(error){
             return thunkAPI.rejectWithValue(error.message);
@@ -25,7 +26,7 @@ export const addProduct= createAsyncThunk(
         formData.append("stock",productData.stock);
         formData.append("image",productData.image);
         try {
-            const response= await axios.post("http://localhost:5000/api/products",
+            const response= await api.post("/products",
                 formData,
             {
                 headers:{
@@ -44,7 +45,7 @@ export const deleteProduct = createAsyncThunk(
     "products/deleteProduct",
     async(id,thunkAPI)=>{
         try {
-            await axios.delete(`http://localhost:5000/api/products/${id}`);
+            await api.delete(`/products/${id}`);
             return id;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
@@ -69,7 +70,7 @@ export const updateProduct = createAsyncThunk(
         }
 
         try {
-            const response = await axios.put(`http://localhost:5000/api/products/${id}`,
+            const response = await api.put(`/products/${id}`,
                 formData,
              {
                 headers: {

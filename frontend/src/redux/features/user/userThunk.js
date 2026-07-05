@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import api from '../../../api/axios'
 
 export const userRegister = createAsyncThunk(
     "user/register",
     async (loginData,thunkAPI)=>{
         try {
-            const response = await axios.post('http://localhost:5000/api/user/register/',loginData,{withCredentials:true});
+            const response = await api.post('/user/register/',loginData,{withCredentials:true});
             return response.data;
 
         } catch (error) {
@@ -17,7 +17,7 @@ export const userLogin = createAsyncThunk(
     "user/login",
     async (loginData,thunkAPI)=>{
         try {
-            const response = await axios.post('http://localhost:5000/api/user/login/',loginData,{withCredentials:true});
+            const response = await api.post('/user/login/',loginData,{withCredentials:true});
             return response.data;
 
         } catch (error) {
@@ -32,7 +32,7 @@ export const getCurrentUser = createAsyncThunk(
     "user/currentUser",
     async(_,thunkAPI)=>{
         try {
-            const response = await axios.get('http://localhost:5000/api/user/me',{ withCredentials:true });
+            const response = await api.get('/user/me',{ withCredentials:true });
             return response.data;
         } catch (error) {
             if(error.response?.status===401){
@@ -47,7 +47,7 @@ export const userLogout = createAsyncThunk(
     "user/logout",
     async(_,thunkAPI)=>{
         try {
-            const response = await axios.post('http://localhost:5000/api/user/logout',{},{withCredentials:true});
+            const response = await api.post('/user/logout',{},{withCredentials:true});
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response?.data?.message || "Logout failed");
