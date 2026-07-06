@@ -17,8 +17,6 @@ app.use(cors({
     credentials:true
 }));
 
-//server upload images
-app.use("/uploads",express.static("uploads"));
 
 app.use('/api/products',productRoutes);
 

@@ -2,13 +2,20 @@ import Product from '../models/productModel.js'
 
 export const createProduct = async (req,res)=>{
     try {
-        const {name,description,price,category,stock}=req.body;
+        if(!req.file) {
+            return res.status(400).json({
+                message : "Product image is required"
+            })
+        }
+        const { name,description,price,category,stock } = req.body;
         const image = req.file.path;
+
         const product = await Product.create({
             name,description,price,category,stock,image
         });
 
         res.status(201).json(product);
+
     } catch (error) {
         res.status(500).json({
             "message":error.message
@@ -74,6 +81,7 @@ export const deleteProduct = async (req,res) =>{
 }
 
 export const updateProduct = async (req, res) => {
+
     const id = req.params.id;
 
     const updateData = {
@@ -85,7 +93,11 @@ export const updateProduct = async (req, res) => {
     };
 
     if (req.file) {
-        updateData.image = req.file.filename;
+        updateData.image = req.file.path;
+    }else{
+        return res.status(400).json({
+            message : "Product image is required"
+        })
     }
 
     try {
