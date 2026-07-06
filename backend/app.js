@@ -12,7 +12,7 @@ app.use(cookieParser());
 app.use(cors({
     origin:[
         'http://localhost:5173',
-        'https://euphonious-gecko-81010f.netlify.app'
+        'https://ecommerce-demo-by-shaima.netlify.app/'
     ],
     credentials:true
 }));
