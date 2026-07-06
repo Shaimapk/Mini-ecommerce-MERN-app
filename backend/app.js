@@ -12,7 +12,7 @@ app.use(cookieParser());
 app.use(cors({
     origin:[
         'http://localhost:5173',
-        'https://ecommerce-demo-by-shaima.netlify.app/'
+        process.env.FRONTEND_URL
     ],
     credentials:true
 }));
